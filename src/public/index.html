@@ -40,10 +40,10 @@
       evt.close();
       term.write("\r\nTerminal exited.");
     });
-    evt.addEventListener('error', function() {
-      evt.close();
-      term.write("\r\nTerminal exited.");
-    });
+    //evt.addEventListener('error', function() {
+    //  evt.close();
+    //  term.write("\r\nTerminal exited.");
+    //});
     term.on('data', function(data) {
       if (evt.readyState === EventSource.OPEN) {
         $.post("/api/v1/terminal/send/" + connectionId, {data: data});
