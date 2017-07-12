@@ -2,7 +2,6 @@ express     = require 'express'
 bodyParser  = require('body-parser')
 uuid        = require 'uuid'
 app         = express()
-var cors = require('cors');
 
 bunyan      = require 'bunyan'
 webLog      = bunyan.createLogger name: 'webserver'
@@ -13,7 +12,6 @@ module.exports =
 
     app.use express.static 'src/public'
     app.use bodyParser.urlencoded extended: false
-    app.use(cors({origin: 'http://10.11.1.65:9999'}));
 
     eventHandlers = []
     addEventHandler = (connectionId, event, cb) ->
@@ -41,6 +39,8 @@ module.exports =
     app.get '/api/v1/terminal/stream/', (req, res) ->
       terminalId = uuid.v4()
       webLog.info 'New terminal session', terminalId: terminalId
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
       res.setHeader 'Connection', 'Transfer-Encoding'
       res.setHeader 'Content-Type', 'text/event-stream; charset=utf-8'
       res.setHeader 'Transfer-Encoding', 'chunked'
