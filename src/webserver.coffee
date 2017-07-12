@@ -2,6 +2,7 @@ express     = require 'express'
 bodyParser  = require('body-parser')
 uuid        = require 'uuid'
 app         = express()
+var cors = require('cors');
 
 bunyan      = require 'bunyan'
 webLog      = bunyan.createLogger name: 'webserver'
@@ -12,6 +13,7 @@ module.exports =
 
     app.use express.static 'src/public'
     app.use bodyParser.urlencoded extended: false
+    app.use(cors({origin: 'http://10.11.1.65:9999'}));
 
     eventHandlers = []
     addEventHandler = (connectionId, event, cb) ->
