@@ -1,10 +1,10 @@
-FROM gliderlabs/alpine
+FROM mhart/alpine-node:6.2.0
+#FROM gliderlabs/alpine
 
 WORKDIR /src
 ADD . .
 
-RUN apk --update add python make g++ nodejs \
-  && npm install \
+RUN apk --update add python make g++ \
   && apk del make gcc g++ python \
   && rm -rf /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp
 
